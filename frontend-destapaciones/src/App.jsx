@@ -3,17 +3,21 @@ import axios from 'axios';
 import { 
   Phone, CheckCircle, Clock, ShieldCheck, Wrench, 
   Award, MessageCircle, Loader2, MapPin, AlertTriangle, 
-  ChevronDown, HelpCircle, CreditCard, TicketCheck 
+  ChevronDown, CreditCard 
 } from 'lucide-react';
 
 function App() {
   const [servicios, setServicios] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeFaq, setActiveFaq] = useState(null); // Estado para controlar el acordeón
+  const [activeFaq, setActiveFaq] = useState(null);
+
+  // Lógica de URL dinámica: Usa la variable de Vercel o el localhost para desarrollo
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/servicios')
+    // Se concatena la URL base con el endpoint
+    axios.get(`${API_URL}/api/servicios`)
       .then(res => {
         setServicios(res.data);
         setIsLoading(false);
@@ -24,7 +28,7 @@ function App() {
         setError("No pudimos cargar el catálogo de servicios.");
         setIsLoading(false);
       });
-  }, []);
+  }, [API_URL]);
 
   const contactarWhatsApp = (servicio = "Consulta General") => {
     const telefono = "5491167095573"; 
@@ -71,7 +75,7 @@ function App() {
           <Loader2 className="absolute -bottom-4 -right-4 text-blue-500 animate-spin" size={32} />
         </div>
         <h2 className="text-white text-xl font-black tracking-tighter mb-2 italic text-uppercase">AD DESTAPACIONES</h2>
-        <p className="text-slate-400 text-sm animate-bounce">Cargando servicios y preguntas frecuentes...</p>
+        <p className="text-slate-400 text-sm animate-bounce">Conectando con el servidor profesional...</p>
       </div>
     );
   }
@@ -129,7 +133,7 @@ function App() {
         <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
         <div className="relative z-10">
           <span className="inline-block bg-blue-600/20 text-blue-400 text-[10px] font-bold px-3 py-1 rounded-full mb-4 border border-blue-500/30 uppercase">Atención en Capital Federal</span>
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight uppercase italic">
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight uppercase italic text-balance">
             No deje que una obstrucción <br/><span className="text-blue-500">detenga su día.</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium leading-relaxed">
@@ -184,7 +188,7 @@ function App() {
         </div>
       </main>
 
-      {/* 5. PREGUNTAS FRECUENTES (NUEVA SECCIÓN) */}
+      {/* 5. PREGUNTAS FRECUENTES */}
       <section className="bg-white py-20 px-6 border-y border-slate-100">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
@@ -229,7 +233,7 @@ function App() {
             </div>
           </div>
           <div className="lg:w-1/2 w-full h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-white/5 shadow-2xl">
-            <iframe title="Mapa CABA" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105073.44367080603!2d-58.53144933333333!3d-34.61566245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca3b4ef90bb5%3A0xee41614d651a2d7!2sCiudad%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1700000000000!5m2!1ses!2sar" width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
+            <iframe title="Mapa CABA" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105073.44367080603!2d-58.531525141380064!3d-34.61566245383634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca3b4ef90cbd%3A0xa0b3812e88e88e8!2sBuenos%20Aires%2C%20CABA!5e0!3m2!1ses-419!2sar!4v1700000000000" width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
           </div>
         </div>
       </section>
@@ -254,7 +258,7 @@ function App() {
               <span className="hover:text-white cursor-pointer transition-all text-xs font-bold tracking-widest uppercase hover:scale-110">Instagram</span>
               <span className="hover:text-white cursor-pointer transition-all text-xs font-bold tracking-widest uppercase hover:scale-110">Facebook</span>
             </div>
-            <p className="text-slate-600 text-[10px] mt-2 italic">Buenos Aires, Argentina</p>
+            <p className="text-slate-600 text-[10px] mt-2 italic">Ciudad Autónoma de Buenos Aires, Argentina</p>
           </div>
         </div>
       </footer>
